@@ -6,7 +6,7 @@ from PIL import Image
 import os
 
 # Define class names manually
-class_names = ['Class1', 'Class2', 'Class3', 'Prapty']  # Replace with your actual class names
+class_names = ['Prapty', 'Rezwan']  # Replace with your actual class names
 
 # Define transformations
 data_transforms = transforms.Compose([
@@ -25,6 +25,7 @@ model.fc = nn.Linear(num_features, len(class_names))
 model = model.to(device)
 model.load_state_dict(torch.load('model/poopy-or-paia-pytorch.pth', map_location=device))
 
+
 # Define accuracy evaluation function
 def evaluate_model(model, dataloader):
     model.eval()
@@ -41,13 +42,19 @@ def evaluate_model(model, dataloader):
     accuracy = corrects / total
     return accuracy
 
+from torchvision import datasets
+
+# Load the dataset from the 'dataset' folder
+data_dir = 'E:/GitHub-rzn/poopy_or_paia/Dataset'
+dataset = datasets.ImageFolder(data_dir, transform=data_transforms)
+
 # Display accuracy
 def show_accuracy():
     # Dummy dataset loader for accuracy
     # Replace this with a validation dataset loader if you have one
     val_loader = torch.utils.data.DataLoader(dataset, batch_size=4, shuffle=True)
     accuracy = evaluate_model(model, val_loader)
-    st.write(f'Validation Accuracy: {accuracy:.4f}')
+    #st.write(f'Validation Accuracy: {accuracy:.4f}')
 
 # Predict function
 def predict_image(image):
